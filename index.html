@@ -3,42 +3,34 @@
    <head>
 	
       <script type="text/javascript">
-	
-         function WebSocketTest()
-         {
-            if ("WebSocket" in window)
-            {
-               console.log("WebSocket is supported by your Browser!");
-               
-               // Let us open a web socket
-               var ws = new WebSocket("ws://192.168.1.214:9030");
-				
-               ws.onopen = function()
-               {
-                  // Web Socket is connected, send data using send()
-                  ws.send("Message to send");
-                  //console.log("Message is sent...");
-               };
-				
-               ws.onmessage = function (evt) 
-               { 
-                  var received_msg = evt.data;
-                  console.log(received_msg);
-               };
-				
-               ws.onclose = function()
-               { 
-                  // websocket is closed.
-                  console.log("Connection is closed..."); 
-               };
-					
-               window.onbeforeunload = function(event) {
-                  socket.close();
-               };
-            }
-            
-            else
-            {
+         function WebSocketTest() {
+            if ("WebSocket" in window) {
+
+                console.log("WebSocket is supported by your Browser!");
+                console.ws = new WebSocket("ws://192.168.1.115:9030");
+
+			    console.ws.onopen = function() {
+			        // Web Socket is connected, send data using send()
+			        console.log = function (msg){console.ws.send(msg)};
+			        console.info = console.log;
+			        console.warn = console.log;
+			        console.error = console.log;
+			        console.log("Message is sent...");
+			    };
+
+			    console.ws.onmessage = function (evt) {
+			        var received_msg = evt.data;
+			    };
+
+			    console.ws.onclose = function() {
+			        // websocket is closed.
+			    };
+
+			    window.onbeforeunload = function(event) {
+			        console.ws.close();
+			    };
+
+            } else {
                // The browser doesn't support WebSocket
                console.log("WebSocket NOT supported by your Browser!");
             }
